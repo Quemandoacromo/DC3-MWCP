@@ -2821,8 +2821,8 @@ class Telegram(Metadata):
     :var str chat_id: Chat id
     """
 
-    _TOKEN_PTN = regex.compile(r"\d{7,10}:[a-zA-Z0-9_-]{35}")
-    _CHAT_ID = regex.compile(r"-?\d{9,13}|(t.me/[\w\d_]+)")
+    _TOKEN_PTN = regex.compile(r"[0-9]{7,10}:[a-zA-Z0-9_-]{35}")
+    _CHAT_ID = regex.compile(r"-?[0-9]{9,13}|(t.me/[\w0-9_]+)")
 
     token: str = attr.ib(
         default=None,
@@ -2869,8 +2869,8 @@ class SmartContract(Metadata):
     :var str function_selector: The function selector parameter of the ETH call
     """
 
-    _ADDRESS_PTN = regex.compile(r"0x[a-fA-F\d]{40,42}")
-    _FUNC_SELECTOR_PTN = regex.compile(r"0x[a-fA-F\d]{8}")
+    _ADDRESS_PTN = regex.compile(r"0x[a-fA-F0-9]{40,42}")
+    _FUNC_SELECTOR_PTN = regex.compile(r"0x[a-fA-F0-9]{8}")
 
     address: str = attr.ib(
         metadata={
