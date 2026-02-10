@@ -2805,39 +2805,10 @@ class MessageBox(Metadata):
 
     def as_stix(self, base_object, fixed_timestamp=None) -> STIXResult:
         result = STIXResult(fixed_timestamp=fixed_timestamp)
-        result.add_linked(
-            stix_extensions.ObservedString(
-                {
-                    "purpose": "message-box-text",
-                    "value": self.text
-                }
-            )
-        )
-        result.add_linked(
-            stix_extensions.ObservedString(
-                {
-                    "purpose": "message-box-caption",
-                    "value": self.caption
-                }
-            )
-        )
-        result.add_linked(
-            stix_extensions.ObservedString(
-                {
-                    "purpose": "message-box-icon",
-                    "value": self.icon
-                }
-            )
-        )
-        result.add_linked(
-            stix_extensions.ObservedString(
-                {
-                    "purpose": "message-box-buttons",
-                    "value": self.buttons
-                }
-            )
-        )
-
+        result.add_linked(stix_extensions.ObservedString(purpose="message-box-text", value=self.text))
+        result.add_linked(stix_extensions.ObservedString(purpose="message-box-caption", value=self.caption))
+        result.add_linked(stix_extensions.ObservedString(purpose="message-box-icon", value=self.icon))
+        result.add_linked(stix_extensions.ObservedString(purpose="message-box-buttons", value=self.buttons))
         return result
 
 
@@ -2884,23 +2855,8 @@ class Telegram(Metadata):
 
     def as_stix(self, base_object, fixed_timestamp=None) -> STIXResult:
         result = STIXResult(fixed_timestamp=fixed_timestamp)
-        result.add_linked(
-            stix_extensions.ObservedString(
-                {
-                    "purpose": "telegram-token",
-                    "value": self.token
-                }
-            )
-        )
-        result.add_linked(
-            stix_extensions.ObservedString(
-                {
-                    "purpose": "telegram-chat-id",
-                    "value": self.chat_id
-                }
-            )
-        )
-
+        result.add_linked(stix_extensions.ObservedString(purpose="telegram-token", value=self.token))
+        result.add_linked(stix_extensions.ObservedString(purpose="telegram-chat-id", value=self.chat_id))
         return result
 
 
@@ -2948,23 +2904,8 @@ class SmartContract(Metadata):
 
     def as_stix(self, base_object, fixed_timestamp=None) -> STIXResult:
         result = STIXResult(fixed_timestamp=fixed_timestamp)
-        result.add_linked(
-            stix_extensions.ObservedString(
-                {
-                    "purpose": "smart-contract-address",
-                    "value": self.address
-                }
-            )
-        )
-        result.add_linked(
-            stix_extensions.ObservedString(
-                {
-                    "purpose": "smart-contract-function-selector",
-                    "value": self.function_selector
-                }
-            )
-        )
-
+        result.add_linked(stix_extensions.ObservedString(purpose="smart-contract-address", value=self.address))
+        result.add_linked(stix_extensions.ObservedString(purpose="smart-contract-function-selector", value=self.function_selector))
         return result
 
 
