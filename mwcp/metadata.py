@@ -30,7 +30,6 @@ import jsonschema_extractor
 from pyasn1.codec.der import decoder as asn1_decoder
 from pyasn1_modules import rfc2437, rfc2459, pem
 from pyasn1.error import PyAsn1Error
-import regex
 
 import mwcp
 from mwcp.exceptions import ValidationError
@@ -2735,7 +2734,7 @@ class SSLCertSHA1(Metadata):
         "pattern": "^[0-9a-fA-F]{40}$",
     }})
 
-    _SHA1_RE = re.compile("[0-9a-fA-F]{40}")
+    _SHA1_RE = re.compile("^[0-9a-fA-F]{40}$")
 
     @value.validator
     def _validate(self, attribute, value):
@@ -2821,8 +2820,8 @@ class Telegram(Metadata):
     :var str chat_id: Chat id
     """
 
-    _TOKEN_PTN = regex.compile(r"[0-9]{7,10}:[a-zA-Z0-9_-]{35}")
-    _CHAT_ID = regex.compile(r"-?[0-9]{9,13}|(t.me/[\w0-9_]+)")
+    _TOKEN_PTN = re.compile(r"^[0-9]{7,10}:[a-zA-Z0-9_-]{35}$")
+    _CHAT_ID = re.compile(r"^-?[0-9]{9,13}|(t.me/[\w0-9_]+)$")
 
     token: str = attr.ib(
         default=None,
@@ -2845,12 +2844,12 @@ class Telegram(Metadata):
 
     @token.validator
     def _validate_token(self, attribute, value):
-        if value and not self._TOKEN_PTN.fullmatch(value):
+        if value and not self._TOKEN_PTN.match(value):
             raise ValidationError(f"Invalid Telegram token found: {value}")
 
     @chat_id.validator
     def _validate_chat_id(self, attribute, value):
-        if value and not self._CHAT_ID.fullmatch(value):
+        if value and not self._CHAT_ID.match(value):
             raise ValidationError(f"Invalid Telegram chat ID found: {value}")
 
     def as_stix(self, base_object, fixed_timestamp=None) -> STIXResult:
@@ -2869,8 +2868,8 @@ class SmartContract(Metadata):
     :var str function_selector: The function selector parameter of the ETH call
     """
 
-    _ADDRESS_PTN = regex.compile(r"0x[a-fA-F0-9]{40,42}")
-    _FUNC_SELECTOR_PTN = regex.compile(r"0x[a-fA-F0-9]{8}")
+    _ADDRESS_PTN = re.compile(r"^0x[a-fA-F0-9]{40,42}$")
+    _FUNC_SELECTOR_PTN = re.compile(r"^0x[a-fA-F0-9]{8}$")
 
     address: str = attr.ib(
         metadata={
@@ -2892,12 +2891,12 @@ class SmartContract(Metadata):
 
     @address.validator
     def _validate_address(self, attribute, value):
-        if not self._ADDRESS_PTN.fullmatch(value):
+        if not self._ADDRESS_PTN.match(value):
             raise ValidationError(f"Invalid smart contract address found: {value}")
 
     @function_selector.validator
     def _validate_function_selector(self, attribute, value):
-        if value and not self._FUNC_SELECTOR_PTN.fullmatch(value):
+        if value and not self._FUNC_SELECTOR_PTN.match(value):
             raise ValidationError(
                 f"Invalid smart contract function selector found: {value}"
             )
