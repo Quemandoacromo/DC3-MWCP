@@ -2842,7 +2842,7 @@ class MessageBox(Metadata):
 
 
 @attr.s(**config)
-class TelegramParameters(Metadata):
+class Telegram(Metadata):
     """
     Telegram parameters
 
