@@ -2872,26 +2872,14 @@ class Telegram(Metadata):
         },
     )
 
-    def validate_token(self, value: str) -> bool:
-        """
-        Helper method to validate a token string
-        """
-        return bool(self._TOKEN_PTN.fullmatch(value))
-
-    def validate_chat_id(self, value: str) -> bool:
-        """
-        Helper method to validate a chat id string
-        """
-        return bool(self._CHAT_ID.fullmatch(value))
-
     @token.validator
     def _validate_token(self, attribute, value):
-        if value and not self.validate_token(value):
+        if value and not self._TOKEN_PTN.fullmatch(value):
             raise ValidationError(f"Invalid Telegram token found: {value}")
 
     @chat_id.validator
     def _validate_chat_id(self, attribute, value):
-        if value and not self.validate_chat_id(value):
+        if value and not self._CHAT_ID.fullmatch(value):
             raise ValidationError(f"Invalid Telegram chat ID found: {value}")
 
     def as_stix(self, base_object, fixed_timestamp=None) -> STIXResult:
@@ -2945,18 +2933,6 @@ class SmartContract(Metadata):
             }
         },
     )
-
-    def validate_address(self, value: str) -> bool:
-        """
-        Helper method to validate a SmartContract address string
-        """
-        return bool(self._ADDRESS_PTN.fullmatch(value))
-
-    def validate_function_selector(self, value: str) -> bool:
-        """
-        Helper method to validate a SmartContract function selector string
-        """
-        return bool(self._FUNC_SELECTOR_PTN.fullmatch(value))
 
     @address.validator
     def _validate_address(self, attribute, value):
