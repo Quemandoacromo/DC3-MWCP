@@ -2734,7 +2734,7 @@ class SSLCertSHA1(Metadata):
         "pattern": "^[0-9a-fA-F]{40}$",
     }})
 
-    _SHA1_RE = re.compile("[0-9a-fA-F]{40}")
+    _SHA1_RE = re.compile("^[0-9a-fA-F]{40}$")
 
     @value.validator
     def _validate(self, attribute, value):
@@ -2784,6 +2784,128 @@ class Version(Metadata):
             content += f"\n    Version: {', '.join(self.tags)}"
 
         return STIXResult(content)
+
+
+@attr.s(**config)
+class MessageBox(Metadata):
+    """
+    MessageBox Parameters
+
+    :var str text: The text to display in the message box
+    :var str caption: The text to display in the title bar of the message box
+    :var str icon: The icon to display in the message box
+    :var str buttons: The button(s) to display in the message box
+    """
+
+    text: str = None
+    caption: str = None
+    icon: str = None
+    buttons: str = None
+
+    def as_stix(self, base_object, fixed_timestamp=None) -> STIXResult:
+        result = STIXResult(fixed_timestamp=fixed_timestamp)
+        result.add_linked(stix_extensions.ObservedString(purpose="message-box-text", value=self.text))
+        result.add_linked(stix_extensions.ObservedString(purpose="message-box-caption", value=self.caption))
+        result.add_linked(stix_extensions.ObservedString(purpose="message-box-icon", value=self.icon))
+        result.add_linked(stix_extensions.ObservedString(purpose="message-box-buttons", value=self.buttons))
+        return result
+
+
+@attr.s(**config)
+class Telegram(Metadata):
+    """
+    Telegram parameters
+
+    :var str token: Telegram token
+    :var str chat_id: Chat id
+    """
+
+    _TOKEN_PTN = re.compile(r"^[0-9]{7,10}:[a-zA-Z0-9_-]{35}$")
+    _CHAT_ID = re.compile(r"^-?[0-9]{9,13}|(t.me/[\w0-9_]+)$")
+
+    token: str = attr.ib(
+        default=None,
+        metadata={
+            "jsonschema": {
+                "type": "string",
+                "pattern": _TOKEN_PTN.pattern,
+            }
+        },
+    )
+    chat_id: str = attr.ib(
+        default=None,
+        metadata={
+            "jsonschema": {
+                "type": "string",
+                "pattern": _CHAT_ID.pattern,
+            }
+        },
+    )
+
+    @token.validator
+    def _validate_token(self, attribute, value):
+        if value and not self._TOKEN_PTN.match(value):
+            raise ValidationError(f"Invalid Telegram token found: {value}")
+
+    @chat_id.validator
+    def _validate_chat_id(self, attribute, value):
+        if value and not self._CHAT_ID.match(value):
+            raise ValidationError(f"Invalid Telegram chat ID found: {value}")
+
+    def as_stix(self, base_object, fixed_timestamp=None) -> STIXResult:
+        result = STIXResult(fixed_timestamp=fixed_timestamp)
+        result.add_linked(stix_extensions.ObservedString(purpose="telegram-token", value=self.token))
+        result.add_linked(stix_extensions.ObservedString(purpose="telegram-chat-id", value=self.chat_id))
+        return result
+
+
+@attr.s(**config)
+class SmartContract(Metadata):
+    """
+    SmartContract Parameters
+
+    :var str address: The address of the smart contract
+    :var str function_selector: The function selector parameter of the ETH call
+    """
+
+    _ADDRESS_PTN = re.compile(r"^0x[a-fA-F0-9]{40,42}$")
+    _FUNC_SELECTOR_PTN = re.compile(r"^0x[a-fA-F0-9]{8}$")
+
+    address: str = attr.ib(
+        metadata={
+            "jsonschema": {
+                "type": "string",
+                "pattern": _ADDRESS_PTN.pattern,
+            }
+        },
+    )
+    function_selector: str = attr.ib(
+        default=None,
+        metadata={
+            "jsonschema": {
+                "type": "string",
+                "pattern": _FUNC_SELECTOR_PTN.pattern,
+            }
+        },
+    )
+
+    @address.validator
+    def _validate_address(self, attribute, value):
+        if not self._ADDRESS_PTN.match(value):
+            raise ValidationError(f"Invalid smart contract address found: {value}")
+
+    @function_selector.validator
+    def _validate_function_selector(self, attribute, value):
+        if value and not self._FUNC_SELECTOR_PTN.match(value):
+            raise ValidationError(
+                f"Invalid smart contract function selector found: {value}"
+            )
+
+    def as_stix(self, base_object, fixed_timestamp=None) -> STIXResult:
+        result = STIXResult(fixed_timestamp=fixed_timestamp)
+        result.add_linked(stix_extensions.ObservedString(purpose="smart-contract-address", value=self.address))
+        result.add_linked(stix_extensions.ObservedString(purpose="smart-contract-function-selector", value=self.function_selector))
+        return result
 
 
 @attr.s(**config)
@@ -2950,4 +3072,3 @@ class StringReport(Element):
     """
     file: File
     strings: List[DecodedString] = attr.ib(factory=list)
-
