@@ -157,7 +157,8 @@ Decoy:
     greedy: true
     overwrite_descriptions: true  
     embedded: true
-    ...
+    config:
+        custom_attribute: 2
     parsers:
       ...
 ```
@@ -181,6 +182,9 @@ Decoy:
     That is, setting this to `true` is the equivalent of embedding the listed parsers directly into the parent's parser list
     that reference the group.
     *(Useful if the group contains a lot of generic parsers like decoy documents that you want to have lower priority)*
+- `config` (default: empty) - This is a mechanism for providing custom configuration options to the parsers in the group.
+    This can be used by parsers however the developer sees fit. Parsers obtain this configuration from `self.config`.
+    It is recommended to document these configuration option in the parser's docstring and/or the parser_config.yml file.
 
 
 ## Formal Parser Packaging

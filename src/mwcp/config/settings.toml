@@ -1,0 +1,82 @@
+
+# Path to logging configuration file.
+# This file must be a yaml file configured with Python logging configuration syntax
+# https://docs.python.org/3/library/logging.config/html#dictionary-schema-details
+# log_config_path = "some/path/to/log_config.yml"
+
+# Overwrites the directory containing JSON test case files for all parsers.
+# If not set, the "tests" directory located within the root directory of the respective parser source
+# will be used.
+# testcase_dir = "~/mwcp_tests"
+
+# Directory containing malware samples used for testing.
+# malware_repo = "~/malware_repo"
+
+# Optional extra parser directory to use along with registered parser extension.
+# This allows you so use a directory of parsers that aren't officially part of any python package.
+# parser_dir = "~/mwcp_parsers"
+
+# Path to the parser_config.yml file to use for the provided extra parser directory above.
+# If this is not set, the "config" attribute in the __init__.py of the parser's directory is used instead.
+# This must be set if the parser directory doesn't have an __init__.py file!
+# parser_config_path = "~/mwcp_parsers/parser_config.yml"
+
+# Name (or path) of a default parser source to use if not explicitly defined.
+# If this is not set, all sources will be considered.
+# (This is useful for enforcing parsers of only a specific source to be used)
+# parser_source = "acme"
+
+# Directory containing yara signatures.
+# yara_repo = "~/yara_repo"
+
+# Keep temporary directory created by FileObject.temp_path()
+keep_tmp = false
+
+# External information provided to the parsing process.
+# This is initialized into the "knowledge_base" dictionary of the Report object.
+# (This can also be set with the '--parameter' flag)
+# e.g: {aes_key = "deadbeef"}
+knowledge_base = {}
+
+# Whether to recursively match and run parsers for unidentified files.
+# (Only applicable if a yara_repo to match files to parsers was provided.)
+recursive = true
+
+
+# Configures report output.
+[report]
+# Default output format.
+# Pick from: csv, json, simple, markdown, html, or stix
+format = "simple"
+# Whether to split up metadata reports based on originating file.
+# By default, results are only consolidated under the original input file.
+split = false
+# Whether to output files to filesystem.
+output_files = true
+# Whether to prefix output filenames with the first 5 characters of the md5.
+md5_prefix = true
+# Suffix on the output directory.
+output_suffix = "_mwcp_output"
+# Whether to report decoded strings into a separate external report output.
+string_report = false
+# Whether to include file data in serialized results.
+include_file_data = false
+# Whether to include error and debug logs in the report.
+include_logs = true
+
+# Configures testing
+[testing]
+# Skip tests that attempt to use Dragodis.
+skip_dragodis = false
+# Skip tests that attempt to use Kordesii.
+skip_kordesii = false
+# Skip tests using an uninstalled dependency (Dragodis or Kordesii).
+skip_missing = true
+# Whether to display a full diff for failed tests. (Disables custom unified diff display.)
+full_diff = false
+# Whether to generate coverage information.
+# After tests are complete, reports can be generated using `coverage`. (e.g. `coverage html`)
+coverage = false
+# Extra arguments to pass along to underlying `pytest` command.
+# (e.g. ["-k", "acme"])
+extra_args = []

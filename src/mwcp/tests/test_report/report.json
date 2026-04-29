@@ -1,0 +1,853 @@
+{
+    "type": "report",
+    "tags": [
+        "tagging",
+        "test"
+    ],
+    "mwcp_version": "MWCP_VERSION",
+    "input_file": {
+        "type": "file",
+        "tags": [],
+        "name": "input_file.bin",
+        "description": null,
+        "md5": "1e50210a0202497fb79bc38b6ade6c34",
+        "sha1": "baf34551fecb48acc3da868eb85e1b6dac9de356",
+        "sha256": "1307990e6ba5ca145eb35e99182a9bec46531bc54ddf656a602c780fa0240dee",
+        "architecture": null,
+        "compile_time": null,
+        "file_path": "C:/input_file.bin",
+        "data": null,
+        "derivation": null
+    },
+    "parser": "FooParser",
+    "recursive": false,
+    "external_knowledge": {},
+    "errors": [
+        "[!] Test error log"
+    ],
+    "logs": [
+        "[+] Test info log",
+        "[!] Test error log",
+        "[*] Test debug log"
+    ],
+    "metadata": [
+        {
+            "type": "path",
+            "tags": [],
+            "path": "C:\\windows\\temp\\1\\log\\keydb.txt",
+            "is_dir": false,
+            "posix": false,
+            "file_system": null
+        },
+        {
+            "type": "path",
+            "tags": [],
+            "path": "%APPDATA%\\foo",
+            "is_dir": true,
+            "posix": false,
+            "file_system": null
+        },
+        {
+            "type": "path",
+            "tags": [],
+            "path": "C:\\foo\\bar.txt",
+            "is_dir": false,
+            "posix": false,
+            "file_system": null
+        },
+        {
+            "type": "path",
+            "tags": [],
+            "path": "malware.exe",
+            "is_dir": false,
+            "posix": null,
+            "file_system": null
+        },
+        {
+            "type": "alphabet",
+            "tags": [],
+            "alphabet": "0123456789ABCDEF",
+            "base": 16
+        },
+        {
+            "type": "alphabet",
+            "tags": [],
+            "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567=",
+            "base": 32
+        },
+        {
+            "type": "alphabet",
+            "tags": [],
+            "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+            "base": 64
+        },
+        {
+            "type": "command",
+            "tags": [],
+            "value": "cmd.exe /c notepad.exe",
+            "cwd": null
+        },
+        {
+            "type": "credential",
+            "tags": [],
+            "username": "admin",
+            "password": "123456"
+        },
+        {
+            "type": "credential",
+            "tags": [],
+            "username": "mruser",
+            "password": null
+        },
+        {
+            "type": "credential",
+            "tags": [],
+            "username": null,
+            "password": "secrets"
+        },
+        {
+            "type": "crypto_address",
+            "tags": [],
+            "address": "14qViLJfdGaP4EeHnDyJbEGQysnCpwk3gd",
+            "symbol": "BTC"
+        },
+        {
+            "type": "scheduled_task",
+            "tags": [],
+            "actions": [
+                {
+                    "type": "command",
+                    "tags": [],
+                    "value": "calc.exe",
+                    "cwd": null
+                }
+            ],
+            "name": "CalcTask",
+            "description": null,
+            "author": null,
+            "credentials": null
+        },
+        {
+            "type": "command",
+            "tags": [],
+            "value": "calc.exe",
+            "cwd": null
+        },
+        {
+            "type": "scheduled_task",
+            "tags": [],
+            "actions": [
+                {
+                    "type": "command",
+                    "tags": [],
+                    "value": "notepad.exe",
+                    "cwd": "C:\\Windows\\Temp"
+                },
+                {
+                    "type": "command",
+                    "tags": [],
+                    "value": "cmd.exe /c \"echo hi\"",
+                    "cwd": null
+                }
+            ],
+            "name": "Complex Task",
+            "description": "Some task with multiple commands",
+            "author": null,
+            "credentials": {
+                "type": "credential",
+                "tags": [],
+                "username": "admin",
+                "password": "pass"
+            }
+        },
+        {
+            "type": "command",
+            "tags": [],
+            "value": "notepad.exe",
+            "cwd": "C:\\Windows\\Temp"
+        },
+        {
+            "type": "command",
+            "tags": [],
+            "value": "cmd.exe /c \"echo hi\"",
+            "cwd": null
+        },
+        {
+            "type": "credential",
+            "tags": [],
+            "username": "admin",
+            "password": "pass"
+        },
+        {
+            "type": "socket",
+            "tags": [],
+            "address": "bad.com",
+            "port": 21,
+            "network_protocol": "tcp",
+            "listen": null
+        },
+        {
+            "type": "socket",
+            "tags": [
+                "c2"
+            ],
+            "address": "website.com",
+            "port": 123,
+            "network_protocol": null,
+            "listen": null
+        },
+        {
+            "type": "socket",
+            "tags": [],
+            "address": null,
+            "port": 1635,
+            "network_protocol": "udp",
+            "listen": null
+        },
+        {
+            "type": "socket",
+            "tags": [],
+            "address": null,
+            "port": 4568,
+            "network_protocol": "tcp",
+            "listen": true
+        },
+        {
+            "type": "network",
+            "tags": [],
+            "url": {
+                "type": "url",
+                "tags": [],
+                "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+                "path": "/watch",
+                "query": "?v=dQw4w9WgXcQ",
+                "protocol": "https"
+            },
+            "socket": {
+                "type": "socket",
+                "tags": [],
+                "address": null,
+                "port": 8080,
+                "network_protocol": null,
+                "listen": null
+            },
+            "credential": {
+                "type": "credential",
+                "tags": [],
+                "username": "You",
+                "password": "Tube"
+            }
+        },
+        {
+            "type": "url",
+            "tags": [],
+            "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+            "path": "/watch",
+            "query": "?v=dQw4w9WgXcQ",
+            "protocol": "https"
+        },
+        {
+            "type": "socket",
+            "tags": [],
+            "address": null,
+            "port": 8080,
+            "network_protocol": null,
+            "listen": null
+        },
+        {
+            "type": "credential",
+            "tags": [],
+            "username": "You",
+            "password": "Tube"
+        },
+        {
+            "type": "network",
+            "tags": [],
+            "url": {
+                "type": "url",
+                "tags": [],
+                "url": "https://www.github.com",
+                "path": null,
+                "query": null,
+                "protocol": "https"
+            },
+            "socket": {
+                "type": "socket",
+                "tags": [],
+                "address": "www.github.com",
+                "port": null,
+                "network_protocol": null,
+                "listen": null
+            },
+            "credential": {
+                "type": "credential",
+                "tags": [],
+                "username": "Malware",
+                "password": "ConfigurationParser"
+            }
+        },
+        {
+            "type": "url",
+            "tags": [],
+            "url": "https://www.github.com",
+            "path": null,
+            "query": null,
+            "protocol": "https"
+        },
+        {
+            "type": "socket",
+            "tags": [],
+            "address": "www.github.com",
+            "port": null,
+            "network_protocol": null,
+            "listen": null
+        },
+        {
+            "type": "credential",
+            "tags": [],
+            "username": "Malware",
+            "password": "ConfigurationParser"
+        },
+        {
+            "type": "network",
+            "tags": [],
+            "url": {
+                "type": "url",
+                "tags": [],
+                "url": "https://www.gitlab.com",
+                "path": null,
+                "query": null,
+                "protocol": "https"
+            },
+            "socket": {
+                "type": "socket",
+                "tags": [],
+                "address": "1.2.3.4",
+                "port": 8080,
+                "network_protocol": "udp",
+                "listen": null
+            },
+            "credential": null
+        },
+        {
+            "type": "url",
+            "tags": [],
+            "url": "https://www.gitlab.com",
+            "path": null,
+            "query": null,
+            "protocol": "https"
+        },
+        {
+            "type": "socket",
+            "tags": [],
+            "address": "1.2.3.4",
+            "port": 8080,
+            "network_protocol": "udp",
+            "listen": null
+        },
+        {
+            "type": "url",
+            "tags": [],
+            "url": "url.url.url",
+            "path": null,
+            "query": null,
+            "protocol": null
+        },
+        {
+            "type": "network",
+            "tags": [],
+            "url": {
+                "type": "url",
+                "tags": [],
+                "url": "url.url.url",
+                "path": null,
+                "query": null,
+                "protocol": null
+            },
+            "socket": {
+                "type": "socket",
+                "tags": [],
+                "address": "url.url.url",
+                "port": null,
+                "network_protocol": null,
+                "listen": null
+            },
+            "credential": null
+        },
+        {
+            "type": "socket",
+            "tags": [],
+            "address": "url.url.url",
+            "port": null,
+            "network_protocol": null,
+            "listen": null
+        },
+        {
+            "type": "url",
+            "tags": [],
+            "url": "https://10.11.10.13:443/images/baner.jpg",
+            "path": "/images/baner.jpg",
+            "query": null,
+            "protocol": "https"
+        },
+        {
+            "type": "network",
+            "tags": [],
+            "url": {
+                "type": "url",
+                "tags": [],
+                "url": "https://10.11.10.13:443/images/baner.jpg",
+                "path": "/images/baner.jpg",
+                "query": null,
+                "protocol": "https"
+            },
+            "socket": {
+                "type": "socket",
+                "tags": [],
+                "address": "10.11.10.13",
+                "port": 443,
+                "network_protocol": null,
+                "listen": null
+            },
+            "credential": null
+        },
+        {
+            "type": "socket",
+            "tags": [],
+            "address": "10.11.10.13",
+            "port": 443,
+            "network_protocol": null,
+            "listen": null
+        },
+        {
+            "type": "url",
+            "tags": [
+                "c2"
+            ],
+            "url": "http://[fe80::20c:1234:5678:9abc]:80/badness",
+            "path": "/badness",
+            "query": null,
+            "protocol": "http"
+        },
+        {
+            "type": "network",
+            "tags": [
+                "c2"
+            ],
+            "url": {
+                "type": "url",
+                "tags": [
+                    "c2"
+                ],
+                "url": "http://[fe80::20c:1234:5678:9abc]:80/badness",
+                "path": "/badness",
+                "query": null,
+                "protocol": "http"
+            },
+            "socket": {
+                "type": "socket",
+                "tags": [
+                    "c2"
+                ],
+                "address": "fe80::20c:1234:5678:9abc",
+                "port": 80,
+                "network_protocol": null,
+                "listen": null
+            },
+            "credential": null
+        },
+        {
+            "type": "socket",
+            "tags": [
+                "c2"
+            ],
+            "address": "fe80::20c:1234:5678:9abc",
+            "port": 80,
+            "network_protocol": null,
+            "listen": null
+        },
+        {
+            "type": "url",
+            "tags": [],
+            "url": null,
+            "path": "url/path.jpg",
+            "query": null,
+            "protocol": null
+        },
+        {
+            "type": "url",
+            "tags": [],
+            "url": null,
+            "path": null,
+            "query": "query?answer=42",
+            "protocol": null
+        },
+        {
+            "type": "network",
+            "tags": [],
+            "url": null,
+            "socket": {
+                "type": "socket",
+                "tags": [
+                    "proxy"
+                ],
+                "address": "192.168.1.1",
+                "port": 80,
+                "network_protocol": "tcp",
+                "listen": null
+            },
+            "credential": {
+                "type": "credential",
+                "tags": [],
+                "username": "admin",
+                "password": "pass"
+            }
+        },
+        {
+            "type": "socket",
+            "tags": [
+                "proxy"
+            ],
+            "address": "192.168.1.1",
+            "port": 80,
+            "network_protocol": "tcp",
+            "listen": null
+        },
+        {
+            "type": "socket",
+            "tags": [
+                "proxy"
+            ],
+            "address": "12.34.56.78",
+            "port": 90,
+            "network_protocol": "tcp",
+            "listen": null
+        },
+        {
+            "type": "socket",
+            "tags": [
+                "proxy"
+            ],
+            "address": "255.255.255.255",
+            "port": null,
+            "network_protocol": null,
+            "listen": null
+        },
+        {
+            "type": "network",
+            "tags": [],
+            "url": {
+                "type": "url",
+                "tags": [],
+                "url": "ftp://badhost.com:21",
+                "path": null,
+                "query": null,
+                "protocol": "ftp"
+            },
+            "socket": {
+                "type": "socket",
+                "tags": [],
+                "address": "badhost.com",
+                "port": 21,
+                "network_protocol": null,
+                "listen": null
+            },
+            "credential": {
+                "type": "credential",
+                "tags": [],
+                "username": "admin",
+                "password": "pass"
+            }
+        },
+        {
+            "type": "url",
+            "tags": [],
+            "url": "ftp://badhost.com:21",
+            "path": null,
+            "query": null,
+            "protocol": "ftp"
+        },
+        {
+            "type": "socket",
+            "tags": [],
+            "address": "badhost.com",
+            "port": 21,
+            "network_protocol": null,
+            "listen": null
+        },
+        {
+            "type": "network",
+            "tags": [],
+            "url": {
+                "type": "url",
+                "tags": [],
+                "url": null,
+                "path": null,
+                "query": null,
+                "protocol": "ftp"
+            },
+            "socket": {
+                "type": "socket",
+                "tags": [],
+                "address": "123.45.67.89",
+                "port": 0,
+                "network_protocol": null,
+                "listen": null
+            },
+            "credential": {
+                "type": "credential",
+                "tags": [],
+                "username": "password",
+                "password": "username"
+            }
+        },
+        {
+            "type": "url",
+            "tags": [],
+            "url": null,
+            "path": null,
+            "query": null,
+            "protocol": "ftp"
+        },
+        {
+            "type": "socket",
+            "tags": [],
+            "address": "123.45.67.89",
+            "port": 0,
+            "network_protocol": null,
+            "listen": null
+        },
+        {
+            "type": "credential",
+            "tags": [],
+            "username": "password",
+            "password": "username"
+        },
+        {
+            "type": "email_address",
+            "tags": [],
+            "value": "email@bad.com"
+        },
+        {
+            "type": "event",
+            "tags": [],
+            "value": "MicrosoftExist"
+        },
+        {
+            "type": "uuid",
+            "tags": [],
+            "value": "654e5cff-817c-4e3d-8b01-47a6f45ae09a"
+        },
+        {
+            "type": "injection_process",
+            "tags": [],
+            "value": "svchost"
+        },
+        {
+            "type": "interval",
+            "tags": [],
+            "value": 3.0
+        },
+        {
+            "type": "encryption_key",
+            "tags": [],
+            "key": "aGVsbG8=",
+            "algorithm": "rc4",
+            "mode": null,
+            "iv": null,
+            "secret": null,
+            "key_derivation": null
+        },
+        {
+            "type": "encryption_key",
+            "tags": [],
+            "key": "/////w==",
+            "algorithm": "aes",
+            "mode": "ecb",
+            "iv": "AAAAAA==",
+            "secret": null,
+            "key_derivation": null
+        },
+        {
+            "type": "encryption_key",
+            "tags": [],
+            "key": "/////w==",
+            "algorithm": "aes",
+            "mode": "cbc",
+            "iv": null,
+            "secret": "cEBzc3cwcmQ=",
+            "key_derivation": "sha256"
+        },
+        {
+            "type": "decoded_string",
+            "tags": [],
+            "value": "GetProcess",
+            "encryption_key": null
+        },
+        {
+            "type": "decoded_string",
+            "tags": [],
+            "value": "badstring",
+            "encryption_key": {
+                "type": "encryption_key",
+                "tags": [],
+                "key": "//8=",
+                "algorithm": "xor",
+                "mode": null,
+                "iv": null,
+                "secret": null,
+                "key_derivation": null
+            }
+        },
+        {
+            "type": "encryption_key",
+            "tags": [],
+            "key": "//8=",
+            "algorithm": "xor",
+            "mode": null,
+            "iv": null,
+            "secret": null,
+            "key_derivation": null
+        },
+        {
+            "type": "mission_id",
+            "tags": [],
+            "value": "target4"
+        },
+        {
+            "type": "mutex",
+            "tags": [],
+            "value": "ithinkimalonenow"
+        },
+        {
+            "type": "other",
+            "tags": [
+                "something"
+            ],
+            "key": "misc_info",
+            "value": "some miscellaneous info",
+            "value_format": "string"
+        },
+        {
+            "type": "other",
+            "tags": [],
+            "key": "random_data",
+            "value": "3q2+7w==",
+            "value_format": "bytes"
+        },
+        {
+            "type": "other",
+            "tags": [],
+            "key": "keylogger",
+            "value": true,
+            "value_format": "boolean"
+        },
+        {
+            "type": "other",
+            "tags": [
+                "tag1"
+            ],
+            "key": "misc_integer",
+            "value": 432,
+            "value_format": "integer"
+        },
+        {
+            "type": "pipe",
+            "tags": [],
+            "value": "\\.\\pipe\\namedpipe"
+        },
+        {
+            "type": "registry",
+            "tags": [],
+            "hive": "HKEY_LOCAL_MACHINE",
+            "subkey": "Software\\Microsoft\\Windows\\CurrentVersion\\Run",
+            "value": "Updater",
+            "data": "c:\\update.exe",
+            "data_type": "REG_SZ"
+        },
+        {
+            "type": "registry",
+            "tags": [],
+            "hive": "HKEY_LOCAL_MACHINE",
+            "subkey": "Foo\\Bar",
+            "value": null,
+            "data": null,
+            "data_type": null
+        },
+        {
+            "type": "registry",
+            "tags": [
+                "tag2"
+            ],
+            "hive": null,
+            "subkey": null,
+            "value": "Baz",
+            "data": null,
+            "data_type": null
+        },
+        {
+            "type": "rsa_private_key",
+            "tags": [],
+            "public_exponent": 7,
+            "modulus": "uw==",
+            "private_exponent": 23,
+            "p": "EQ==",
+            "q": "Cw==",
+            "d_mod_p1": "Bw==",
+            "d_mod_q1": "Aw==",
+            "q_inv_mod_p": "Dg=="
+        },
+        {
+            "type": "rsa_public_key",
+            "tags": [],
+            "public_exponent": 7,
+            "modulus": "uw=="
+        },
+        {
+            "type": "service",
+            "tags": [],
+            "name": "WindowsUserManagement",
+            "display_name": "Windows User Management",
+            "description": "Provides a common management to access information about windows user.",
+            "image": "%System%\\svohost.exe",
+            "dll": null
+        },
+        {
+            "type": "path",
+            "tags": [],
+            "path": "%System%\\svohost.exe",
+            "is_dir": false,
+            "posix": false,
+            "file_system": null
+        },
+        {
+            "type": "user_agent",
+            "tags": [],
+            "value": "Mozilla/4.0 (compatible; MISE 6.0; Windows NT 5.2)"
+        },
+        {
+            "type": "version",
+            "tags": [],
+            "value": "3.1"
+        },
+        {
+            "type": "version",
+            "tags": [],
+            "value": "403.10"
+        },
+        {
+            "type": "file",
+            "tags": [],
+            "name": "config.xml",
+            "description": "Extracted backdoor Foo config file",
+            "md5": "8c41f2802904e53469390845cfeb2b28",
+            "sha1": "ce6519a1dc71510ee15e66b3926fd164a373803a",
+            "sha256": "81addbf732d9d6c24b1d3ede7afceef6a1cff59af7b63d01504a0913a6c6701a",
+            "architecture": null,
+            "compile_time": null,
+            "file_path": null,
+            "data": null,
+            "derivation": "embedded"
+        }
+    ]
+}

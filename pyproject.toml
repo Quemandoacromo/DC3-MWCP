@@ -1,0 +1,96 @@
+[build-system]
+requires = ["setuptools > 61.2, < 70.0", "wheel"]
+
+[project]
+name = "mwcp"
+description = "A framework for malware configuration parsers."
+authors = [
+    {name = "DC3", email = "dc3.tsd@us.af.mil"},
+]
+keywords = ["malware"]
+readme = {file = "README.md", content-type = "text/markdown"}
+license = {file = "LICENSE.txt"}
+dynamic = ["version"]
+classifiers = [
+    "Development Status :: 6 - Mature",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+requires-python = ">= 3.11"
+dependencies = [
+    "anytree",
+    "attrs>=20.3.0",
+    "bitarray",
+    "cattrs>=24.1.0",
+    "click>=8.3.0",
+    "construct >=2.9.45, <2.11",
+    "defusedxml",
+    "dynaconf",
+    "future",
+    "isodate",
+    "jinja2",  # For construct.html_hex()
+    "jsonschema_extractor>=1.0",
+    'lief>=0.16.0;python_version>="3.9"',
+    "markupsafe",
+    "packaging",
+    "pandas",
+    "pefile>=2019.4.18",
+    "platformdirs",
+    "pyasn1",
+    "pyasn1_modules",
+    "pyelftools",
+    "pyparsing",
+    "pytest>=6.0.0",
+    "pytest-datadir",
+    "pytest-xdist",
+    "pytest-mock",
+    "pytest-cov",
+    "pyyaml",
+    "requests",
+    "ruamel.yaml",
+    "tabulate[widechars]<1.0.0",
+    "stix2",
+    "yara-python",
+    # For the server and API
+    "flask",
+    "pygments",
+    # Dependencies for builtin parsers.
+    "pycdlib",
+    "pycryptodome",
+    "olefile",
+    "lief>=0.17.0",
+    "patool>=4.0.4",
+]
+
+[project.optional-dependencies]
+dragodis = ["dragodis>=1.1.0"]
+testing = ["jsonschema"]
+
+[project.scripts]
+mwcp = "mwcp.cli:main"
+poshdeob = "mwcp.utils.poshdeob:main"
+
+[project.entry-points."mwcp.parsers"]
+dc3 = "mwcp.parsers"
+
+[project.urls]
+Homepage = "https://github.com/dod-cyber-crime-center/DC3-MWCP"
+Repository = "https://github.com/dod-cyber-crime-center/DC3-MWCP.git"
+Changelog = "https://github.com/dod-cyber-crime-center/DC3-MWCP/blob/master/CHANGELOG.md"
+
+[tool.setuptools.dynamic]
+version = {attr = "mwcp.__version__"}
+
+[tool.pytest.ini_options]
+testpaths = ["src/mwcp/tests"]
+required_plugins = [
+    "pytest-datadir",
+    "pytest-xdist",
+    "pytest-mock",
+    "pytest-cov",
+]
+filterwarnings = "ignore::DeprecationWarning"
+addopts = "-p no:faulthandler"

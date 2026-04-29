@@ -10,6 +10,48 @@ All notable changes to this project will be documented in this file.
 - Add metadata fields for `MessageBox`, `Telegram`, and `SmartContract` parameters. (@ddash-ct)
 
 
+
+## [Unreleased]
+
+### Added
+- Added `.config` attribute to parsers. This provides a way for obtaining user configuration from the parser configuration file.
+- Added `Executable` parser which uses Rugosa to generically emulate and extract metadata.
+- Added `FileObject.static_strings()` function to pull defined strings from the disassembly using Dragodis.
+- Added `FileObject.is_archive()` and `FileObject.extract_archive()` to extract subfiles from archives.
+
+### Changed
+- Updated `MachO` parser.
+- Changed `FileObject.stack_strings()` to a function and replace usage of Kordesii with Rugosa.
+- Updated configuration to use DynaConf.
+
+### Removed
+- Deprecated use of Kordesii in `FileObject`
+- Removed legacy support in command line tool.
+- Dropped support for Python 3.10
+- Removed `--config` option from cli. User instead should use environment variables or a `mwcp.toml` file.
+- Removed `mwcp_update_legacy_tests` tool.
+
+## Changed
+- Tags of metadata elements will now be automatically applied to sub-elements.
+
+## [Unreleased]
+
+### Added
+- Added `Report.parsing_file()` context manager to temporarily set the file being parsed.
+- Added `Report.as_json()` to deserialize json results back into a Report.
+- Added `mwcp load` command for displaying json report results in different formats.
+- Added option in `mwcp parse` command to include file data in serialized results.
+
+### Changed
+- Switched to pyproject.toml setup.
+- Tested support for using Vivisect backend disassembler.
+- Replaced json serialization of large RSA key integers to use base64 instead.
+- Replaced pkg_resources with importlib.metadata and importlib.resources.
+
+### Removed
+- Removed Techanarchy bridge.
+
+
 ## [3.14.0] - 2024-05-29
 
 ### Added

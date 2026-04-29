@@ -1,0 +1,87 @@
+Archive:
+  description: Archive file types
+  author: DC3
+  parsers:
+    - .Zip
+    - .Gzip
+
+Decoy:
+  description: Generic file types described as a decoy file
+  author: DC3
+  parsers:
+    - .DOC
+    - .PDF
+    - .RTF
+    - .JPG
+    - .DOCX
+    - .XLSX
+    - .PPTX
+
+Executable:
+  description: Generic parser using disassembly emulation
+  author: DC3
+  config:
+    disassembler: ida               # backend disassembler to use. (works best with IDA)
+    depth: 0                        # number of calls up the stack
+    call_depth: 1                   # number of function calls we are allowed to emulate into
+    exhaustive: false               # whether to process all code paths (SLOW)
+    follow_loops: false             # whether to emulate loops (SLOW)
+    max_instructions: 100_000       # max number of instructions to emulate per code path.
+    min_length: 5                   # Minimum number of characters to count as a string.
+  parsers:
+    - .PE
+    - .ELF
+
+foo:
+  description: example parser that works on any file
+  author: DC3
+  parsers:
+    - .Foo
+
+GenericDropper:
+  description: Generic Dropper
+  author: DC3
+  parsers:
+    - .Overlay
+    - .RSRC
+
+ISO: .ImageFile
+
+MachO: .FATBinary
+
+PDF: .Document
+
+PowerShell: .Script
+
+Python:
+  description: Python artifacts
+  author: DC3
+  parsers:
+    - .PyInstaller
+
+Quarantined:
+  description: Anti-Virus Quarantined File
+  author: DC3
+  parsers:
+    - .McAfee
+    - .Defender
+    - .SymantecQB
+    - .SymantecSubSDK
+    - .AhnLab
+    - .Avast_AVG
+
+RSA:
+  description: RSA artifacts
+  author: DC3
+  parsers:
+    - .DigitalCertificate
+    - .PrivateKey
+    - .PublicKey
+
+VisualBasic:
+  description: VisualBasic Script
+  author: DC3
+  parsers:
+    - .EncodedASP  # must come first
+    - .VBE
+    - .VBScript

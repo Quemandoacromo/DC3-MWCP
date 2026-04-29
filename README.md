@@ -391,22 +391,44 @@ for element in report:
 
 ## Configuration
 
-DC3-MWCP uses a configuration file which is located within the user's 
-profile directory. (`%APPDATA%\Local\mwcp\config.yml` for Windows or `~/.config/mwcp/config.yml` for Linux)
+All options are configurable through a [settings.toml](src/mwcp/config/settings.toml) file.
 
-This configuration file is used to manage configurable parameters, such as the location
-of the malware repository used for testing or the default parser source.
+DC3-MWCP looks for a user defined configuration file at either `~/.config/mwcp/settings.toml` or `%LOCALAPPDATA%\dc3\mwcp\settings.toml`
+to overwrite the default settings.
 
-To configure this file, run `mwcp config` to open up the file in your default text
-editor.
-
-An alternative configuration file can also be temporarily set using the `--config` parameter.
-
-```console
-> mwcp --config='new_config.yml' test Foo
+To view the current configuration run the following:
+```shell
+mwcp config list
 ```
 
-Individual configuration parameters can be overwritten on the command line using the respective parameter.
+To edit the configuration run the following to open the file in a text editor.
+(This will copy the default configuration into a user directory)
+```shell
+mwcp config edit
+```
+
+To create a new user configuration file without editing:
+```shell
+mwcp config create
+```
+
+An alternative configuration file can also be used by creating a `mwcp.toml` file under the current directory.
+This file has higher priority then other settings
+
+```console
+echo -e 'keep_tmp = true' > mwcp.toml
+mwcp test Foo
+```
+
+We use [Dynaconf](https://dynaconf.com) which provides conveniences like setting configuration using environment variables
+prefixed with `MWCP_`.
+
+For example, to set the location of the malware repo:
+
+```shell
+export MWCP_MALWARE_REPO="/data/malware_repo"
+```
+
 
 ## Logging
 

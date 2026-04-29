@@ -328,8 +328,8 @@ class Dropper(Parser):
                 \x68(?P<config_offset>.{4})     # push  <config_offset>
                 \xE8.{4}                        # call  process_config
             ''', re.DOTALL | re.VERBOSE),
-                               config_offset=construct.Int32ul
-                               ),
+            config_offset=construct.Int32ul
+        ),
         'config' / construct.PEPointer(this.re.config_offset, CONFIG)
     )
 
@@ -368,37 +368,6 @@ class Dropper(Parser):
 
         # dispatch implant to be picked up by another parser.
         self.dispatcher.add(FileObject(implant_data))
-```
-
-
-## Tech Anarchy Bridge
-
-While DC3-MWCP does not include any malware parsers, it does include a bridge to enable use
-of the parsers provided by Kev of [TechAnarchy/malwareconfig.com](http://kevthehermit.github.io/RATDecoders).
-The purpose of this bridge is to execute the Tech Anarchy parsers, capture the output, and normalize
-the fields. This bridge can be used to create simple DC3-MWCP modules which call the underlying
-Tech Anarchy parsers. It is the responsibility of the user to ensure that field mappings are
-correct, adjusting the bridge as necessary.
-
-See [mwcp/resources/techanarchy_bridge.py](../mwcp/resources/techanarchy_bridge.py)
-
-All Tech Anarchy parsers found within the `mwcp/resources/RATDecoders` folder will
-automatically be available for use as a parser using the `TA.` prefix. (e.g. `TA.CyberGate`)
-
-After executing the parser, check for issues in data mappings or format. Adjust the field mapping code of techanarchy_bridge.py accordingly. For example,
-the following CyberGate specific condition was added to address malformed output in the original techanarchy parser:
-
-```python
-from mwcp import metadata
-
-if scriptname == "CyberGate":
-    report.add(metadata.Socket(
-        address=data["Domain"].rstrip("|"), port=data["Port"].rstrip("|"), network_protocol="tcp", c2=True
-    ))
-else:
-    report.add(metadata.Socket(
-        address=data["Domain"], port=data["Port"], network_protocol="tcp", c2=True
-    ))
 ```
 
 

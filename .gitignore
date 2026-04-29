@@ -2,6 +2,7 @@
 .DS_Store
 .project
 .vscode/
+tmp/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -27,6 +28,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+uv.lock
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -68,3 +70,5 @@ target/
 
 /scratch
 TODO.txt
+template.yml
+.env
