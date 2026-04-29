@@ -1,6 +1,19 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+### Added
+- `malstruct>=3.0.20260429` dependency
+
+### Changed
+- Replaced `construct` usage with `malstruct`, enabling support for Python beyond 3.12 (@ddash-ct)
+
+### Removed
+- Removed `construct` extensions which are all present in `malstruct` library (@ddash-ct)
+- Removed `pecon` utility which is present in `malstruct` library (@ddash-ct)
+
+
 ## [3.16.0] - 2026-05-01
 
 ### Added

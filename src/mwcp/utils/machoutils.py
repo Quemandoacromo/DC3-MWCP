@@ -7,8 +7,6 @@ from functools import lru_cache
 import lief
 from typing import List, Iterable, Optional
 
-from mwcp.utils import construct
-
 
 @lru_cache()
 def obtain_macho(file_data: bytes) -> Optional[lief.MachO.FatBinary]:

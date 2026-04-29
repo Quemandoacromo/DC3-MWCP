@@ -28,13 +28,13 @@ from bitarray import bitarray
 import cattr
 from defusedxml import ElementTree
 import jsonschema_extractor
+import malstruct
 from pyasn1.codec.der import decoder as asn1_decoder
 from pyasn1_modules import rfc2437, rfc2459, pem
 from pyasn1.error import PyAsn1Error
 
 import mwcp
 from mwcp.exceptions import ValidationError
-from mwcp.utils import construct
 from mwcp.utils.stringutils import sanitize_filename
 from mwcp.stix import extensions as stix_extensions
 from mwcp.stix.objects import STIXResult
@@ -2421,7 +2421,7 @@ class RSAPrivateKey(Metadata):
         :raises ValueError: on failure
         """
         try:
-            privkey = construct.PRIVATEKEYBLOB.parse(data)
+            privkey = malstruct.PRIVATEKEYBLOB.parse(data)
             return RSAPrivateKey(
                 public_exponent=privkey.pubexponent,
                 modulus=privkey.modulus,
@@ -2432,7 +2432,7 @@ class RSAPrivateKey(Metadata):
                 d_mod_q1=privkey.Dq,
                 q_inv_mod_p=privkey.Iq,
             )
-        except construct.ConstructError as e:
+        except malstruct.ConstructError as e:
             raise ValueError(f"Failed to parse Private Key BLOB: {e}")
 
     @classmethod
@@ -2574,12 +2574,12 @@ class RSAPublicKey(Metadata):
         :raises ValueError: on failure
         """
         try:
-            pubkey = construct.PUBLICKEYBLOB.parse(data)
+            pubkey = malstruct.PUBLICKEYBLOB.parse(data)
             return RSAPublicKey(
                 public_exponent=pubkey.pubexponent,
                 modulus=pubkey.modulus,
             )
-        except construct.ConstructError as e:
+        except malstruct.ConstructError as e:
             raise ValueError(f"Failed to parse Public Key BLOB: {e}")
 
     @classmethod

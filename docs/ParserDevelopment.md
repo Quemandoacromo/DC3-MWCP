@@ -283,16 +283,16 @@ class Implant(Parser):
 ```
 
 
-## Using The Construct Library
-We have found that using the [construct](https://construct.readthedocs.io) library has greatly helped to organize
+## Using The Malstruct Library
+We have found that using the [malstruct](https://malstruct.readthedocs.io/en/latest/) library has greatly helped to organize
 and simplify extracting configuration data. It helps to separate the act of extraction from the analysis of
 the data itself. This makes the code easier to read and update. Construct has fully replaced our use
 of the enstructured library.
 
 Our usual strategy is:
-1. For each component, we create a construct spec that defines how to retrieve and extract our wanted data.
-    - Our extra helper utilities ([mwcp.utils.construct](../mwcp/utils/construct/helpers.py)) contains a `construct.Regex` and `construct.PEPointer` constructs, that make it easy to find a particular pointer within the malware code and trace it to the referenced data.
-1. If the construct spec has some validation components (Regex, Const, OneOf, Check, etc.) the spec can also
+1. For each component, we create a malstruct spec that defines how to retrieve and extract our wanted data.
+    - Malstruct contains helper utilities including `malstruct.Regex` and `malstruct.PEPointer` constructs, that make it easy to find a particular pointer within the malware code and trace it to the referenced data.
+1. If the malstruct spec has some validation components (Regex, Const, OneOf, Check, etc.) the spec can also
 be used in the `identify()` function.
 
 For example:
@@ -387,4 +387,4 @@ class Dropper(Parser):
     - Maintain cross platform functionality: *nix and windows
 - The parser should never try to write output files directly to the filesystem.
     - Either add `File` metadata element to the report or let the `Dispatcher` output it for you.
-- Use [malstruct](construct.ipynb) to help organize your config structures.
+- Use [malstruct](malstruct.ipynb) to help organize your config structures.
