@@ -1,28 +1,31 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [3.16.0] - 2026-05-01
 
 ### Added
 - `machoutils` helper utility that works similar to `pefileutils`, but for Mach-O files. (@ddash-ct)
 - Add `macho` property to `FileObject`. (@ddash-ct)
 - `lief>=0.16.0;python_version>="3.9"` dependency for `macho`
 - Add metadata fields for `MessageBox`, `Telegram`, and `SmartContract` parameters. (@ddash-ct)
-
-
-
-## [Unreleased]
-
-### Added
 - Added `.config` attribute to parsers. This provides a way for obtaining user configuration from the parser configuration file.
 - Added `Executable` parser which uses Rugosa to generically emulate and extract metadata.
 - Added `FileObject.static_strings()` function to pull defined strings from the disassembly using Dragodis.
 - Added `FileObject.is_archive()` and `FileObject.extract_archive()` to extract subfiles from archives.
+- Added `Report.parsing_file()` context manager to temporarily set the file being parsed.
+- Added `Report.as_json()` to deserialize json results back into a Report.
+- Added `mwcp load` command for displaying json report results in different formats.
+- Added option in `mwcp parse` command to include file data in serialized results.
 
 ### Changed
 - Updated `MachO` parser.
 - Changed `FileObject.stack_strings()` to a function and replace usage of Kordesii with Rugosa.
 - Updated configuration to use DynaConf.
+- Switched to pyproject.toml setup.
+- Tested support for using Vivisect backend disassembler.
+- Replaced json serialization of large RSA key integers to use base64 instead.
+- Replaced pkg_resources with importlib.metadata and importlib.resources.
+- Tags of metadata elements will now be automatically applied to sub-elements.
 
 ### Removed
 - Deprecated use of Kordesii in `FileObject`
@@ -30,25 +33,6 @@ All notable changes to this project will be documented in this file.
 - Dropped support for Python 3.10
 - Removed `--config` option from cli. User instead should use environment variables or a `mwcp.toml` file.
 - Removed `mwcp_update_legacy_tests` tool.
-
-## Changed
-- Tags of metadata elements will now be automatically applied to sub-elements.
-
-## [Unreleased]
-
-### Added
-- Added `Report.parsing_file()` context manager to temporarily set the file being parsed.
-- Added `Report.as_json()` to deserialize json results back into a Report.
-- Added `mwcp load` command for displaying json report results in different formats.
-- Added option in `mwcp parse` command to include file data in serialized results.
-
-### Changed
-- Switched to pyproject.toml setup.
-- Tested support for using Vivisect backend disassembler.
-- Replaced json serialization of large RSA key integers to use base64 instead.
-- Replaced pkg_resources with importlib.metadata and importlib.resources.
-
-### Removed
 - Removed Techanarchy bridge.
 
 
@@ -710,7 +694,8 @@ It is assumed if you are not updating/adding tests.
 - Fixed broken markdown headings from @bryant1410
 
 
-[Unreleased]: https://github.com/dod-cyber-crime-center/DC3-MWCP/compare/3.14.0...HEAD
+[Unreleased]: https://github.com/dod-cyber-crime-center/DC3-MWCP/compare/3.16.0...HEAD
+[3.16.0]: https://github.com/dod-cyber-crime-center/DC3-MWCP/compare/3.14.0...3.16.0
 [3.14.0]: https://github.com/dod-cyber-crime-center/DC3-MWCP/compare/3.13.1...3.14.0
 [3.13.1]: https://github.com/dod-cyber-crime-center/DC3-MWCP/compare/3.13.0...3.13.1
 [3.13.0]: https://github.com/dod-cyber-crime-center/DC3-MWCP/compare/3.12.0...3.13.0

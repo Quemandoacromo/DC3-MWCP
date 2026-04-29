@@ -31,4 +31,4 @@ from mwcp.core import run, schema
 from mwcp.exceptions import *
 
 
-__version__ = "3.15.0"
+__version__ = "3.16.0"
