@@ -301,36 +301,40 @@ For example:
 import os
 import re
 
+import malstruct
+from malstruct import this
+
 from mwcp import Parser, FileObject, metadata
-from mwcp.utils import construct
-from construct import this
 
 
 class Dropper(Parser):
     """Parser for the Foo Trojan."""
     DESCRIPTION = 'Foo Dropper'
 
-    CONFIG = construct.Struct(
-        'c2_address' / construct.CString(),
-        'key' / construct.Int32ul,
-        'mutex' / construct.Bytes(5),
-        'size' / construct.Int32ul,
-        'encrypted_data' / construct.Bytes(this.size)
+    CONFIG = malstruct.Struct(
+        'c2_address' / malstruct.CString(),
+        'key' / malstruct.Int32ul,
+        'mutex' / malstruct.Bytes(5),
+        'size' / malstruct.Int32ul,
+        'encrypted_data' / malstruct.Bytes(this.size)
     )
 
-    # Jumps to the location of the decryption call then dereferences and extract the
-    # the config parameter.
-    DECRYPT_CALL = construct.Struct(
-        're' / construct.Regex(re.compile('''
-                \x85\xC0                        # test  eax, eax
-                \x75\x07                        # jne   0xb
-                \x56                            # push  esi
-                \x68(?P<config_offset>.{4})     # push  <config_offset>
-                \xE8.{4}                        # call  process_config
-            ''', re.DOTALL | re.VERBOSE),
-            config_offset=construct.Int32ul
+    # Jumps to the location of the decryption call then dereferences and extract the config parameter.
+    DECRYPT_CALL = malstruct.Struct(
+        're' / malstruct.Regex(
+            re.compile(
+                br'''
+                    \x85\xC0                        # test  eax, eax
+                    \x75\x07                        # jne   0xb
+                    \x56                            # push  esi
+                    \x68(?P<config_offset>.{4})     # push  <config_offset>
+                    \xE8.{4}                        # call  process_config
+                ''',
+                re.DOTALL | re.VERBOSE
+            ),
+            config_offset=malstruct.Int32ul
         ),
-        'config' / construct.PEPointer(this.re.config_offset, CONFIG)
+        'config' / malstruct.PEPointer(this.re.config_offset, CONFIG)
     )
 
     @classmethod
@@ -347,7 +351,7 @@ class Dropper(Parser):
         try:
             cls.DECRYPT_CALL.parse(file_object.file_data, pe=file_object.pe)
             return True
-        except construct.ConstructError:
+        except malstruct.ConstructError:
             return False
 
     def run(self):
@@ -383,4 +387,4 @@ class Dropper(Parser):
     - Maintain cross platform functionality: *nix and windows
 - The parser should never try to write output files directly to the filesystem.
     - Either add `File` metadata element to the report or let the `Dispatcher` output it for you.
-- Use [mwcp.utils.construct](construct.ipynb) to help organize your config structures.
+- Use [malstruct](construct.ipynb) to help organize your config structures.

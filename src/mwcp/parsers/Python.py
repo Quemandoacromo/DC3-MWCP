@@ -5,30 +5,30 @@ Parses Python artifacts
 import os
 from typing import Optional
 
-from construct import this
+import malstruct
+from malstruct import this
 
 from mwcp import FileObject, Parser
 from mwcp.metadata import Version
-from mwcp.utils import construct
 
 
 class PyInstaller(Parser):
     DESCRIPTION = "PyInstaller"
 
-    TABLE_ENTRY = construct.Struct(
-        "entry_size" / construct.Int32ub,
-        "offset" / construct.Int32ub,
-        "compressed_size" / construct.Int32ub,
-        "final_size" / construct.Int32ub,
-        "flag" / construct.Flag,
-        "type" / construct.String(1),
-        "name" / construct.String(this.entry_size - 18),
-        "data" / construct.Pointer(
+    TABLE_ENTRY = malstruct.Struct(
+        "entry_size" / malstruct.Int32ub,
+        "offset" / malstruct.Int32ub,
+        "compressed_size" / malstruct.Int32ub,
+        "final_size" / malstruct.Int32ub,
+        "flag" / malstruct.Flag,
+        "type" / malstruct.String(1),
+        "name" / malstruct.String(this.entry_size - 18),
+        "data" / malstruct.Pointer(
             this.offset,
-            construct.IfThenElse(
+            malstruct.IfThenElse(
                 this.flag,
-                construct.Compressed(construct.Bytes(this.compressed_size), lib="zlib"),
-                construct.Bytes(this.compressed_size),
+                malstruct.Compressed(malstruct.Bytes(this.compressed_size), lib="zlib"),
+                malstruct.Bytes(this.compressed_size),
             ),
         ),
     )
@@ -42,24 +42,24 @@ class PyInstaller(Parser):
         magic = b'MEI\x0C\x0B\x0A\x0B\x0E'
         # pyinstaller 2.0
         if file_object.data[-24:-24 + len(magic)] == magic:
-            cookie_spec = construct.Struct(
-                "magic" / construct.Const(magic),
-                "package_size" / construct.Int32ub,
-                "toc_offset" / construct.Int32ub,
-                "toc_entries" / construct.Int32ub,
-                "python_version" / construct.Int32ub,
+            cookie_spec = malstruct.Struct(
+                "magic" / malstruct.Const(magic),
+                "package_size" / malstruct.Int32ub,
+                "toc_offset" / malstruct.Int32ub,
+                "toc_entries" / malstruct.Int32ub,
+                "python_version" / malstruct.Int32ub,
             )
             return True, cookie_spec
 
         # pyinstaller 2.1+
         elif file_object.data[-88:-88+len(magic)] == magic:
-            cookie_spec = construct.Struct(
-                "magic" / construct.Const(magic),
-                "package_size" / construct.Int32ub,
-                "toc_offset" / construct.Int32ub,
-                "toc_entries" / construct.Int32ub,
-                "python_version" / construct.Int32ub,
-                "python_dll" / construct.String(64),
+            cookie_spec = malstruct.Struct(
+                "magic" / malstruct.Const(magic),
+                "package_size" / malstruct.Int32ub,
+                "toc_offset" / malstruct.Int32ub,
+                "toc_entries" / malstruct.Int32ub,
+                "python_version" / malstruct.Int32ub,
+                "python_dll" / malstruct.String(64),
             )
             return True, cookie_spec
 
@@ -96,7 +96,7 @@ class PyInstaller(Parser):
 
         return FileObject(data, file_name=name)
 
-    def run(self, cookie_spec: construct.Struct):
+    def run(self, cookie_spec: malstruct.Struct):
         """
         Extract the cookie information in order to extract and parse the table of contents. Identify the .manifest
         filename in order to obtain the name of the target script to add to the dispatcher.
@@ -105,9 +105,9 @@ class PyInstaller(Parser):
 
         cookie = cookie_spec.parse(self.file_object.data[-cookie_size:])
         package = self.file_object.data[-cookie.package_size: -cookie_size]
-        package_spec = construct.Struct(
-            construct.Padding(cookie.toc_offset),
-            "toc" / self.TABLE_ENTRY[:],
+        package_spec = malstruct.Struct(
+            malstruct.Padding(cookie.toc_offset),
+            "toc" / malstruct.GreedyRange(self.TABLE_ENTRY),
         )
         info = package_spec.parse(package)
 
