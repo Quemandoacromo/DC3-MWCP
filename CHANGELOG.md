@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 ### Removed
 - Removed `construct` extensions which are all present in `malstruct` library (@ddash-ct)
 - Removed `pecon` utility which is present in `malstruct` library (@ddash-ct)
+- Removed `jinja2` dependency
 
 
 ## [3.16.0] - 2026-05-01
