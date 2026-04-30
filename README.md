@@ -30,7 +30,7 @@ command line tool. DC3-MWCP is authored by the Defense Cyber Crime Center (DC3).
 - [Parser Installation](docs/ParserInstallation.md)
 - [Parser Testing](docs/ParserTesting.md)
 - [Python Style Guide](docs/PythonStyleGuide.md)
-- [Construct Tutorial](docs/construct.ipynb)
+- [Malstruct Tutorial](docs/malstruct.ipynb)
 - [Style Guide](docs/PythonStyleGuide.md)
 - [Testing](docs/Testing.md)
 
@@ -670,10 +670,4 @@ MWCP comes with a few helper utilities (located in `mwcp.utils`) that may become
 - `pefileutils` - Provides helper functions for common routines done with the `pefile` library. (obtaining or checking for exports, imports, resources, sections, etc.)
 - `elffileutils` - Provides helper functions for common routines done with the `elftools` library. Provides a consistent interface similar to `pefileutils`.
 - `custombase64` - Provides functions for base64 encoding/decoding data with a custom alphabet.
-- `construct` - Provides extended functionality to the [construct](https://construct.readthedocs.io) library and brings
-  back some lost features from version 2.8 into 2.9.
-  - This library has replaced the `enstructured` library originally found in the resources directory.
-  - Please follow [this tutorial](docs/construct.ipynb) for migrating from `enstructured` to `construct`.
-- `pecon` - PE file reconstruction utility.
-  - Please see docstring in [pecon.py](mwcp/utils/pecon.py) for more information.
 - `poshdeob` - An experimental powershell deobfuscator utility used to statically deobfuscate code and extract strings.
