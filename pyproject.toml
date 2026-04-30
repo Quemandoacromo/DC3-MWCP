@@ -61,12 +61,12 @@ dependencies = [
     "pycryptodome",
     "olefile",
     "lief>=0.17.0",
-    "patool>=4.0.4",
 ]
 
 [project.optional-dependencies]
 dragodis = ["dragodis>=1.1.0"]
 testing = ["jsonschema"]
+patool = ["patool>=4.0.4"]
 
 [project.scripts]
 mwcp = "mwcp.cli:main"

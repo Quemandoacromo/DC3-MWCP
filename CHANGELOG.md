@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 - Replaced `construct` usage with `malstruct`, enabling support for Python beyond 3.12 (@ddash-ct)
+- Make `patool` an optional dependency
 
 ### Removed
 - Removed `construct` extensions which are all present in `malstruct` library (@ddash-ct)

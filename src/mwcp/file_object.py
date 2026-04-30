@@ -18,8 +18,6 @@ import tempfile
 import warnings
 from typing import List, Optional, Iterable, Union, TYPE_CHECKING, ContextManager, Unpack
 
-import patoolib
-from patoolib.util import PatoolError
 import pefile
 from elftools.elf.elffile import ELFFile
 
@@ -41,6 +39,13 @@ try:
 except ImportError:
     dragodis = None
     rugosa = None
+
+try:
+    import patoolib
+    from patoolib.util import PatoolError
+except ImportError:
+    patoolib = None
+    PatoolError = None
 
 
 if TYPE_CHECKING:
@@ -761,6 +766,8 @@ class FileObject:
         """
         Detects if file is an archive (using patool)
         """
+        if not patoolib:
+            raise DependencyNotInstalled("patool dependency is not installed. Please install mwcp with 'patool' extra.")
         with self.temp_path() as file_path:
             return patoolib.is_archive(file_path)
 
@@ -781,6 +788,8 @@ class FileObject:
 
         :raises ValueError: If file is not a valid archive file.
         """
+        if not patoolib:
+            raise DependencyNotInstalled("patool dependency is not installed. Please install mwcp with 'patool' extra.")
         with self.temp_path(extension=extension) as file_path:
             # Run patool to extract files using appropriate tool.
             output_dir = pathlib.Path(file_path + ".extracted")
