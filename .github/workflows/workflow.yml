@@ -34,7 +34,7 @@ jobs:
       # Build the distributable package as well as the release patch
       - name: Build Objects
         if: startsWith(github.ref, 'refs/tags')
-        run: nox -s build
+        run: nox -s build-${{ matrix.python-version }}
 
       # Ensure the objects were packaged correctly and there wasn't an issue with
       # the compilation or packaging process.
