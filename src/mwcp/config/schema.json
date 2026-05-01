@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2019-09/schema",
-    "$id": "https://raw.githubusercontent.com/dod-cyber-crime-center/DC3-MWCP/3.15.0/mwcp/config/schema.json",
+    "$id": "https://raw.githubusercontent.com/dod-cyber-crime-center/DC3-MWCP/3.16.0/mwcp/config/schema.json",
     "title": "Report",
     "description": "Defines the report of all metadata elements.",
     "type": "object",
@@ -653,6 +653,51 @@
                             "type",
                             "tags",
                             "value"
+                        ]
+                    },
+                    {
+                        "title": "MessageBox",
+                        "description": "MessageBox Parameters",
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "const": "message_box"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "text": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ]
+                            },
+                            "caption": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ]
+                            },
+                            "icon": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ]
+                            },
+                            "buttons": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ]
+                            }
+                        },
+                        "additionalProperties": false,
+                        "required": [
+                            "type",
+                            "tags"
                         ]
                     },
                     {
@@ -1410,6 +1455,43 @@
                         ]
                     },
                     {
+                        "title": "SmartContract",
+                        "description": "SmartContract Parameters",
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "const": "smart_contract"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "address": {
+                                "type": "string",
+                                "pattern": "^0x[a-fA-F0-9]{40,42}$"
+                            },
+                            "function_selector": {
+                                "anyOf": [
+                                    {
+                                        "type": "string",
+                                        "pattern": "^0x[a-fA-F0-9]{8}$"
+                                    },
+                                    {
+                                        "type": "null"
+                                    }
+                                ]
+                            }
+                        },
+                        "additionalProperties": false,
+                        "required": [
+                            "type",
+                            "tags",
+                            "address"
+                        ]
+                    },
+                    {
                         "title": "Socket",
                         "description": "A collection of address, port, and protocol used together to make a socket connection.",
                         "type": "object",
@@ -1492,6 +1574,49 @@
                             "type",
                             "tags",
                             "value"
+                        ]
+                    },
+                    {
+                        "title": "Telegram",
+                        "description": "Telegram parameters",
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "const": "telegram"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "token": {
+                                "anyOf": [
+                                    {
+                                        "type": "string",
+                                        "pattern": "^[0-9]{7,10}:[a-zA-Z0-9_-]{35}$"
+                                    },
+                                    {
+                                        "type": "null"
+                                    }
+                                ]
+                            },
+                            "chat_id": {
+                                "anyOf": [
+                                    {
+                                        "type": "string",
+                                        "pattern": "^-?[0-9]{9,13}|(t.me/[\\w0-9_]+)$"
+                                    },
+                                    {
+                                        "type": "null"
+                                    }
+                                ]
+                            }
+                        },
+                        "additionalProperties": false,
+                        "required": [
+                            "type",
+                            "tags"
                         ]
                     },
                     {
