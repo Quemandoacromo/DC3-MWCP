@@ -1,7 +1,12 @@
 """
 Parses a Mach-O Universal Binary (FAT binary)
 """
-import lief
+from mwcp.exceptions import DependencyNotInstalled
+
+try:
+    import lief
+except ImportError:
+    raise DependencyNotInstalled("'lief' dependency not installed. Please install mwcp with 'parsers' extra.")
 
 from mwcp import Parser, FileObject
 

@@ -4,7 +4,12 @@ Parses emulated components from a generic executable.
 import re
 from typing import Union, Tuple, Any
 
-import rugosa
+from mwcp.exceptions import DependencyNotInstalled
+
+try:
+    import rugosa
+except ImportError:
+    raise DependencyNotInstalled(f"'rugosa' dependency not installed. Please install mwcp with 'parsers' extra.")
 from rugosa import MaxExecutionHit, EmulationError
 from rugosa.emulation.objects import *
 from rugosa.emulation.actions import *

@@ -4,7 +4,12 @@ ISO Image
 
 from io import BytesIO
 
-import pycdlib
+from mwcp.exceptions import DependencyNotInstalled
+
+try:
+    import pycdlib
+except ImportError:
+    raise DependencyNotInstalled(f"pycdlib dependency is not installed. Please install mwcp with the 'parsers' extra.")
 
 from mwcp import Parser, FileObject
 

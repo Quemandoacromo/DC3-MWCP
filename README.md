@@ -36,33 +36,33 @@ command line tool. DC3-MWCP is authored by the Defense Cyber Crime Center (DC3).
 
 ## Install
 
-```console
-> pip install mwcp
+```bash
+pip install mwcp
 ```
 
-Alternatively you can clone this repo and install locally.
+By default, only the dependencies needed to run the base framework are installed.
+To use the builtin parsers or specific features the optional dependencies may need to be installed:
 
-```console
-> git clone https://github.com/Defense-Cyber-Crime-Center/DC3-MWCP.git
-> pip install ./DC3-MWCP
+```bash
+pip install mwcp[server,parsers,patool,dragodis,kordesii]  # installs everything
 ```
 
-For a development mode use the `-e` flag to install in editable mode:
-
-```console
-> git clone https://github.com/Defense-Cyber-Crime-Center/DC3-MWCP.git
-> pip install -e ./DC3-MWCP
-```
 
 ## Builtin Parsers
 
 DC3-MWCP includes a handful of builtin [parsers](./mwcp/parsers) to get you started.
 These can be used as-is, subclassed, or included in your own parser groups.
 
+To use the builtin parsers, you must ensure the `parsers` extra is installed:
+
+```bash
+pip install mwcp[parsers]
+```
+
 To view the available parsers:
 
 ```bash
-$ mwcp list
+mwcp list
 ```
 
 Parsers are installed under the `dc3` source name. To include them in a group simply add them with
@@ -87,10 +87,8 @@ the file's disassembly from the `mwcp.FileObject` object with the `.disassembly(
 
 You can install Dragodis along with DC3-MWCP by adding `[dragodis]` to your appropriate install command:
 
-```
+```bash
 pip install mwcp[dragodis]
-pip install ./DC3-MWCP[dragodis]
-pip install -e ./DC3-MWCP[dragodis]
 ```
 
 After installation make sure to follow Dragodis's [installation instructions](https://github.com/Defense-Cyber-Crime-Center/Dragodis/blob/master/docs/install.rst) to setup
@@ -107,10 +105,8 @@ if it is installed. This will allow you to run any DC3-Kordesii decoder from the
 
 You can install DC3-Kordesii along with DC3-MWCP by adding `[kordesii]` to your appropriate install command:
 
-```
+```bash
 pip install mwcp[kordesii]
-pip install ./DC3-MWCP[kordesii]
-pip install -e ./DC3-MWCP[kordesii]
 ```
 
 ## Usage

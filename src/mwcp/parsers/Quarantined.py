@@ -7,9 +7,14 @@ from itertools import cycle
 import pathlib
 import re
 
-import olefile
-from Crypto.Cipher import ARC4, Blowfish
-from Crypto.Util import Padding
+from mwcp.exceptions import DependencyNotInstalled
+
+try:
+    import olefile
+    from Crypto.Cipher import ARC4, Blowfish
+    from Crypto.Util import Padding
+except ImportError as e:
+    raise DependencyNotInstalled(f"Dependency not installed: ({e}) Please install mwcp with 'parsers' extra.")
 
 from mwcp import Parser, FileObject, metadata
 
