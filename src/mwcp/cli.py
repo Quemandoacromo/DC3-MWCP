@@ -168,7 +168,7 @@ def config_list(args):
 @click.option("-j", "--json", "json_", is_flag=True, help="Display as JSON output.")
 def list_(all_, json_):
     """Lists registered malware config parsers."""
-    descriptions = mwcp.get_parser_descriptions(config_only=not all_)
+    descriptions = mwcp.get_parser_descriptions(allow_missing_deps=True, config_only=not all_)
     if json_:
         print(json.dumps(descriptions, indent=4))
     else:

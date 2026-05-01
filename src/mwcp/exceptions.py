@@ -31,7 +31,7 @@ class ParserNotFoundError(MWCPError):
     """
 
 
-class DependencyNotInstalled(MWCPError, RuntimeError):
+class DependencyNotInstalled(MWCPError, RuntimeError, ImportError):
     """
     This exception gets thrown if an optional dependency (dragodis or kordesii) is not installed.
     """

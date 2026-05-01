@@ -20,7 +20,7 @@ from ruamel.yaml import YAML
 from mwcp.config import settings
 from mwcp.parser import Parser
 from mwcp.dispatcher import Dispatcher
-from mwcp.exceptions import ParserNotFoundError
+from mwcp.exceptions import ParserNotFoundError, DependencyNotInstalled
 
 yaml = YAML()
 logger = logging.getLogger(__name__)
@@ -383,7 +383,7 @@ def _import_all_modules(package):
 
 
 def iter_parsers(
-        name: str = None, source: str = None, config_only=True, _recursive=True
+        name: str = None, source: str = None, config_only=True, allow_missing_deps=False, _recursive=True
     ) -> Iterable[tuple[Source, Dispatcher | Type[Parser]]]:
     """
     Iterates all registered parsers.
@@ -393,6 +393,7 @@ def iter_parsers(
                        (source name is either the name of a python package or path to local directory)
     :param bool config_only: Whether to only include parsers listed in the parser configuration file.
                              (ie. ignore component parsers like "Foo.Implant")
+    :param bool allow_missing_deps: Whether to allow skipping parsers with missing dependencies.
     :param bool _recursive: Whether to generate sub parsers.
         (This is used internally, don't change it unless you know what you are doing)
 
@@ -419,7 +420,13 @@ def iter_parsers(
         # Find list of parser names to generate
         if name:
             try:
-                parser = _generate_parser(name, source, recursive=_recursive)
+                try:
+                    parser = _generate_parser(name, source, recursive=_recursive)
+                except DependencyNotInstalled as e:
+                    if allow_missing_deps:
+                        logger.warning(f"Could not import parser '{source.name}:{name}': {e}")
+                        continue
+                    raise
                 yield source, parser
             except ParserNotFoundError as e:
                 logger.debug(f"[{source.name}] {e}")
@@ -428,35 +435,49 @@ def iter_parsers(
         else:
             # If parser name is not provided provide all parsers from the given source.
             for parser_name in source.config.keys():
-                parser = _generate_parser(parser_name, source, recursive=_recursive)
+                try:
+                    parser = _generate_parser(parser_name, source, recursive=_recursive)
+                except DependencyNotInstalled as e:
+                    if allow_missing_deps:
+                        logger.warning(f"Could not import parser '{source.name}:{parser_name}': {e}")
+                        continue
+                    raise
                 yield source, parser
 
             # Also list all the component parsers if requested.
             if not config_only:
-                _import_all_modules(source.package)
-                package_prefix = source.package.__name__ + "."
-                for klass in set(Parser.iter_subclasses()):
-                    # Ignore classes without DESCRIPTIONS since they are usually base classes.
-                    if klass.DESCRIPTION and klass.__module__.startswith(package_prefix):
-                        parser_name = f"{klass.__module__[len(package_prefix):]}.{klass.__name__}"
-                        klass.name = parser_name
-                        yield source, klass
+                try:
+                    _import_all_modules(source.package)
+                    package_prefix = source.package.__name__ + "."
+                    for klass in set(Parser.iter_subclasses()):
+                        # Ignore classes without DESCRIPTIONS since they are usually base classes.
+                        if klass.DESCRIPTION and klass.__module__.startswith(package_prefix):
+                            parser_name = f"{klass.__module__[len(package_prefix):]}.{klass.__name__}"
+                            klass.name = parser_name
+                            yield source, klass
+                except DependencyNotInstalled as e:
+                    if allow_missing_deps:
+                        logger.warning(f"Could not fully import parser source '{source.name}': {e}")
 
 
-def get_parser_descriptions(name=None, source=None, config_only=True):
+def get_parser_descriptions(name=None, source=None, allow_missing_deps=False, config_only=True) -> list[ParserInfo]:
     """
     Retrieve list of parser descriptions
 
     :param str name: Filters parser based on a particular name. (":" notation is also supported)
     :param str source: Filters parser based on a particular source.
                        (source is either the name of a python package or path to local directory)
+    :param bool allow_missing_deps: Whether to allow skipping parsers with missing dependencies.
     :param bool config_only: Whether to only include parsers listed in the parser configuration file.
                              (ie. ignore component parsers like "Foo.Implant")
 
     Returns list of tuples per parser. Tuple contains parser name, author, and description.
     """
     descriptions = []
-    for _source, parser in iter_parsers(name=name, source=source, config_only=config_only, _recursive=False):
+    parsers = iter_parsers(
+        name=name, source=source, allow_missing_deps=allow_missing_deps, config_only=config_only, _recursive=False
+    )
+    for _source, parser in parsers:
         descriptions.append(ParserInfo(parser.name, _source.name, parser.AUTHOR, parser.DESCRIPTION))
     return sorted(descriptions, key=lambda e: tuple(sub.lower() for sub in e))  # Case-insensitive sorting.
 
