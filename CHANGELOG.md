@@ -1,8 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-
-## [Unreleased]
+## [3.16.1] - 2026-05-04
 
 ### Added
 - `malstruct>=3.0.20260429` dependency
@@ -714,7 +713,8 @@ It is assumed if you are not updating/adding tests.
 - Fixed broken markdown headings from @bryant1410
 
 
-[Unreleased]: https://github.com/dod-cyber-crime-center/DC3-MWCP/compare/3.16.0...HEAD
+[Unreleased]: https://github.com/dod-cyber-crime-center/DC3-MWCP/compare/3.16.1...HEAD
+[3.16.1]: https://github.com/dod-cyber-crime-center/DC3-MWCP/compare/3.16.0...3.16.1
 [3.16.0]: https://github.com/dod-cyber-crime-center/DC3-MWCP/compare/3.14.0...3.16.0
 [3.14.0]: https://github.com/dod-cyber-crime-center/DC3-MWCP/compare/3.13.1...3.14.0
 [3.13.1]: https://github.com/dod-cyber-crime-center/DC3-MWCP/compare/3.13.0...3.13.1
