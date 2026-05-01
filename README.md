@@ -183,10 +183,16 @@ well as a REST API for some commonly used functions:
 - ```/descriptions``` -- provides list of available parsers
 - ```/schema.json``` -- provides the [schema](#schema) for report output
 
+The server requires mwcp to be installed with the `server` extra:
+
+```bash
+pip install mwcp[server]
+```
+
 To use, first start the server by running:
 
-```console
-> mwcp serve
+```bash
+mwcp serve
 ```
 
 Then you can either use an HTTP client to create REST requests.

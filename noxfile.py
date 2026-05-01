@@ -17,14 +17,14 @@ PYTHON_VERSIONS = nox.project.python_versions(PYPROJECT, max_version="3.12")
 @nox.session(python=PYTHON_VERSIONS)
 def test_parsers(session):
     """Test parsers"""
-    session.install("-e", ".[testing]")
+    session.install("-e", ".[testing,parsers]")
     session.run("mwcp", "test", "-y")
 
 
 @nox.session(python=PYTHON_VERSIONS)
 def test_framework(session):
     """Test framework code"""
-    session.install("-e", ".[testing]")
+    session.install("-e", ".[testing,server]")
     session.run("pytest", "-m", "framework")
 
 

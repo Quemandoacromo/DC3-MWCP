@@ -97,7 +97,7 @@ def _get_expected_results(legacy: bool):
                 "derivation": None,
             },
             "parser": "foo",
-            "recursive": True,
+            "recursive": False,
             "external_knowledge": {},
             "metadata": [
                 {

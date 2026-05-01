@@ -53,9 +53,6 @@ dependencies = [
     "tabulate[widechars]<1.0.0",
     "stix2",
     "yara-python",
-    # For the server and API
-    "flask",
-    "pygments",
 ]
 
 [project.optional-dependencies]
@@ -70,6 +67,11 @@ parsers = [
     "pycdlib>=1.16.0",
     "pycryptodome>=3.23.0",
     "rugosa>=1.3.0",
+]
+# Dependencies for server tool.
+server = [
+    "flask>=3.1.3",
+    "pygments>=2.20.0",
 ]
 
 [project.scripts]

@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file.
 - Replaced `construct` usage with `malstruct`, enabling support for Python beyond 3.12 (@ddash-ct)
 - Make `patool` an optional dependency
 - Moved dependencies for builtin parsers to `parsers` extra.
+- Moved dependencies for server tool to `server` extra.
 
 ### Removed
 - Removed `construct` extensions which are all present in `malstruct` library (@ddash-ct)
