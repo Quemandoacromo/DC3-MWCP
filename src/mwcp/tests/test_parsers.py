@@ -3,7 +3,7 @@ import json
 import pytest
 from packaging import version
 
-from mwcp.exceptions import ValidationError
+from mwcp.exceptions import ValidationError, DependencyNotInstalled
 
 try:
     import dragodis
@@ -355,13 +355,18 @@ def _test_parser(pytestconfig, input_file_path, results_path):
 
     # NOTE: Reading bytes of input file instead of passing in file path to ensure everything gets run in-memory
     #   and no residual artifacts (like idbs) are created in the malware repo.
-    report = mwcp.run(
-        parser_name,
-        data=input_file_path.read_bytes(),
-        include_logs=False,
-        recursive=recursive,
-        knowledge_base=knowledge_base,
-    )
+    try:
+        report = mwcp.run(
+            parser_name,
+            data=input_file_path.read_bytes(),
+            include_logs=False,
+            recursive=recursive,
+            knowledge_base=knowledge_base,
+        )
+    except DependencyNotInstalled as e:
+        if settings.testing.skip_missing:
+            pytest.skip(str(e))
+        raise
     actual_results = report.as_json_dict()
 
     _fixup_test_cases(expected_results, actual_results)

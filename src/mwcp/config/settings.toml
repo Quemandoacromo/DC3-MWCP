@@ -71,6 +71,7 @@ skip_dragodis = false
 # Skip tests that attempt to use Kordesii.
 skip_kordesii = false
 # Skip tests using an uninstalled dependency (Dragodis or Kordesii).
+# This affects any parser that raises the DependencyNotInstalled exception.
 skip_missing = true
 # Whether to display a full diff for failed tests. (Disables custom unified diff display.)
 full_diff = false
