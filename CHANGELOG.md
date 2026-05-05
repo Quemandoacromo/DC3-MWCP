@@ -1,10 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+
 ## [Unreleased]
 
 ### Added
 - `malstruct>=3.0.20260429` dependency
+- Create `setup` and `teardown` messages for running a parser, creating bookends for parser log messages. (@ddash-ct)
+- Create an `EXPECTED` field intended for expected output parameters from running the parser, automatically logged in `setup`. (@ddash-ct)
 
 ### Changed
 - Replaced `construct` usage with `malstruct`, enabling support for Python beyond 3.12 (@ddash-ct)

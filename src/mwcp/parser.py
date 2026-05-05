@@ -53,6 +53,8 @@ class Parser(metaclass=ParserMeta):
     # This is the description that will be given to the file object during output
     # if no description is set in the file_object. This must be overwritten by inherited classes.
     DESCRIPTION = None
+    # These are the expected output parameters from running the parser
+    EXPECTED: str = None
     # This is a tuple of tags that will be added to the file object after identification.
     TAGS = ()
 
@@ -154,7 +156,11 @@ class Parser(metaclass=ParserMeta):
         if dispatcher:
             report.set_file(file_object)
             parser_object = cls(file_object, report, dispatcher)
-            parser_object.run(*run_args)
+            try:
+                parser_object.setup()
+                parser_object.run(*run_args)
+            finally:
+                parser_object.teardown()
 
         # If dispatcher isn't provided, create a dummy one containing only this parser.
         # This is necessary to ensure identification is run first.
@@ -163,6 +169,21 @@ class Parser(metaclass=ParserMeta):
 
             dispatcher = Dispatcher(cls.name, cls.source, author=cls.AUTHOR, description=cls.DESCRIPTION, parsers=[cls])
             dispatcher.parse(file_object, report, *run_args)
+
+    def setup(self):
+        """
+        Log a setup message for the parser
+        """
+        setup_message = f"Starting parser {self.DESCRIPTION} on sample {self.file_object.name}. "
+        if self.EXPECTED:
+            setup_message += f"Expected results include {self.EXPECTED}."
+        self.logger.info(setup_message)
+
+    def teardown(self):
+        """
+        Log a teardown message for the parser
+        """
+        self.logger.info(f"Completed parsing using {self.DESCRIPTION} for sample {self.file_object.name}")
 
     def run(self, *args):
         """
