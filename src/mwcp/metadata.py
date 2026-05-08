@@ -175,6 +175,7 @@ def _auto_convert(cls, fields):
                 raise ValidationError(f"Failed to cast {v!r} to {field_type} with error: {e}")
         return _wrapper
 
+    attr.resolve_types(cls, attribs=fields)
     new_fields = []
     for field in fields:
         if field.converter is None and field.type:
